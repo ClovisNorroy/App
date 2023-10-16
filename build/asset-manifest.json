@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "https://bebuddy.company/static/css/main.86eae5f7.css",
+    "main.js": "https://bebuddy.company/static/js/main.d342e6a2.js",
+    "static/js/787.959d6034.chunk.js": "https://bebuddy.company/static/js/787.959d6034.chunk.js",
+    "index.html": "https://bebuddy.company/index.html",
+    "main.86eae5f7.css.map": "https://bebuddy.company/static/css/main.86eae5f7.css.map",
+    "main.d342e6a2.js.map": "https://bebuddy.company/static/js/main.d342e6a2.js.map",
+    "787.959d6034.chunk.js.map": "https://bebuddy.company/static/js/787.959d6034.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.86eae5f7.css",
+    "static/js/main.d342e6a2.js"
+  ]
+}
