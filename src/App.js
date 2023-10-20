@@ -8,8 +8,10 @@ import Activity from 'pages/Activity';
 import Login from 'pages/Login';
 import Signup from 'pages/Signup';
 import NewActivity from 'pages/NewActivity';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { LocalizationProvider } from '@mui/x-date-pickers';
 
-function App() {
+function App({children}) {
   const router = createBrowserRouter([
     {
       path: '/',
@@ -26,7 +28,10 @@ function App() {
     }
   ])
   return (
-    <RouterProvider router={router} />
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      {children}
+      <RouterProvider router={router} />
+    </LocalizationProvider>
   );
 }
 
