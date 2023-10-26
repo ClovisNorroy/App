@@ -10,6 +10,7 @@ import Signup from 'pages/Signup';
 import NewActivity from 'pages/NewActivity';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers';
+import Activities from 'pages/Activities';
 
 function App({children}) {
   const router = createBrowserRouter([
@@ -19,7 +20,7 @@ function App({children}) {
       errorElement: <PageNotFound />,
       children: [
         { path: '/', element: <Home /> },
-        { path: '/activities', element: <MyActivities /> },
+        { path: '/activities', element: <Activities/> },
         { path: '/activities/:id', element: <Activity /> },
         { path: '/login', element: <Login /> },
         { path: '/signup', element: <Signup /> },

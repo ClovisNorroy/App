@@ -5,7 +5,7 @@ import styles from "./NavigationMenu.module.css";
 function NavigationMenu() {
   const pages = [
     { href: "/", label: "Home" },
-    { href: "/myactivities", label: "Activities" },
+    { href: "/activities", label: "Activities" },
     { href: "/myprofile", label: "My Profile" },
     { href: "/login", label: "Login" },
     { href: "/signup", label: "Signup"}
