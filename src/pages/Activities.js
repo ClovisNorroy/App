@@ -1,3 +1,5 @@
+import { Typography } from "@mui/material";
+
 const { default: ActivityCard } = require("components/Activities/ActivityCard");
 const { useEffect, useState } = require("react");
 
@@ -16,16 +18,16 @@ function Activities(){
     return(
         <>
         {
-            activities.map( activity => 
+           activities ? activities.map( activity => 
                 <ActivityCard
                 key={activity.id}
                 title={activity.Title}
                 name={activity.name}
                 place={activity.Place}
                 nbrparticipants={activity.nbrParticipants}/>)
+                : <Typography> Loading </Typography>
         }
         </>
-    
     )
 }
 
