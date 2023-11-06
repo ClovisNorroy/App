@@ -1,4 +1,3 @@
-import MyActivities from 'pages/MyActivities';
 import './App.css';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Home from 'pages/Home';
@@ -11,6 +10,7 @@ import NewActivity from 'pages/NewActivity';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import Activities from 'pages/Activities';
+import MyProfile from 'pages/MyProfile';
 
 function App({children}) {
   const router = createBrowserRouter([
@@ -21,10 +21,11 @@ function App({children}) {
       children: [
         { path: '/', element: <Home /> },
         { path: '/activities', element: <Activities/> },
-        { path: '/activities/:id', element: <Activity /> },
+        //{ path: '/activities/:id', element: <Activity /> },
         { path: '/login', element: <Login /> },
         { path: '/signup', element: <Signup /> },
-        { path: '/newactivity', element: <NewActivity /> }
+        { path: '/newactivity', element: <NewActivity /> },
+        { path: '/myprofile', element: <MyProfile />}
       ]
     }
   ])

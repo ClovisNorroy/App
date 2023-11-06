@@ -12,4 +12,5 @@ bower_components
 psd
 thumb
 sketch
-src/pages/NewActivity.js
+.gitignore
+package-lock.json
