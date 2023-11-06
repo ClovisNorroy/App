@@ -17,7 +17,7 @@ function NavigationMenu() {
             <Typography
               href={page.href}
               variant="h6"
-              nowrap
+              nowrap="true"
               component="a"
               sx={{ marginLeft: 2}}
               className={styles.appbarItem}

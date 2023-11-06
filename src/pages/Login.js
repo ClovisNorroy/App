@@ -6,14 +6,13 @@ function Login() {
   const passwordRef = useRef('');
 
   function sendLogin() {
-    fetch("http://localhost:8000/api/login_check", {
+    fetch("https://localhost:8000/api/login_check", {
       method: 'POST',
       body: JSON.stringify({ username: usernameRef.current.value, password: passwordRef.current.value }),
-      headers: { "Content-Type": "application/json" }
-    }).then(response => { console.log(response); return response.json(); }).then(data => {
-
-      console.log(data)
-    })
+      headers: { "Content-Type": "application/json"}
+    }).then(response => { console.log(response); return response; }).then(data => {
+      console.log(data);
+    });
   }
 
   function testCookies() {
