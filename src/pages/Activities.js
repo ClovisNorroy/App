@@ -7,13 +7,13 @@ function Activities(){
     const [activities, setActivities] = useState();
     //fetch data once on render
     useEffect(() =>{
-        fetch("https://127.0.0.1:8000/api/activities", {
+        fetch(process.env.REACT_APP_BEBUDDY_API+"/api/activities", {
             method: 'GET',
             credentials: 'include',
             headers: { "Content-Type": "application/json"}
         }).then(response => { console.log(response); return response.json(); }).then(data => {
             console.log(data);
-            //setActivities(data);
+            setActivities(data);
           })
     }, [])
     return(

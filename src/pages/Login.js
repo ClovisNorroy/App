@@ -6,7 +6,7 @@ function Login() {
   const passwordRef = useRef('');
 
   function sendLogin() {
-    fetch("https://localhost:8000/api/login_check", {
+    fetch(process.env.REACT_APP_BEBUDDY_API+"/api/login_check", {
       method: 'POST',
       body: JSON.stringify({ username: usernameRef.current.value, password: passwordRef.current.value }),
       headers: { "Content-Type": "application/json"}
@@ -15,15 +15,11 @@ function Login() {
     });
   }
 
-  function testCookies() {
-    fetch()
-  }
   return (
     <>
       <TextField id="username-field" label="Username" variant="standard" inputRef={usernameRef} />
       <TextField id="password-field" label="Password" variant="standard" type="password" inputRef={passwordRef} />
       <Button id="button-send-login" onClick={sendLogin}>Login</Button>
-      <Button id="test-cookies" onClick={testCookies}>Test Cookies</Button>
     </>
   )
 }
