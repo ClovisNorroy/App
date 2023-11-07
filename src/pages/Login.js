@@ -8,6 +8,7 @@ function Login() {
   function sendLogin() {
     fetch(process.env.REACT_APP_BEBUDDY_API+"/api/login_check", {
       method: 'POST',
+      credentials: "include",
       body: JSON.stringify({ username: usernameRef.current.value, password: passwordRef.current.value }),
       headers: { "Content-Type": "application/json"}
     }).then(response => { console.log(response); return response; }).then(data => {
