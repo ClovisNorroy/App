@@ -14,4 +14,4 @@ thumb
 sketch
 .gitignore
 package-lock.json
-build
+build/*
