@@ -1,4 +1,4 @@
-import { Button, Stack, Typography, styled } from "@mui/material";
+import { Button, Stack, TextField, Typography, styled } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Box } from "@mui/system";
 import { DateField } from "@mui/x-date-pickers";
@@ -9,10 +9,29 @@ function MyProfile(){
 
     const [newUserProfilePictureFile, setNewUserProfilePictureFile] = useState();
     const [userProfilePicture, setUserProfilePicture] = useState();
-    const [userProfileInfos, setUserProfileInfos] = useState();
+    const [userProfilePlace, setUserProfilePlace] = useState("");
+    const [userProfileAbout, setUserProfileAbout] = useState("");
+    const [userProfileBirthdate, setUserProfileBirthdate] = useState("");
+    const [isSaveButtonDeactivated, setIsSaveButtonDeactivated] = useState(true);
+    const [isProfilePictureChanged, setIsProfilePictureChanged] = useState(false)
 
+    function saveChanges(){
+        fetch(process.env.REACT_APP_BEBUDDY_API+"/api/userprofile", {
+            method: "POST",
+            credentials: "include",
+            body: JSON.stringify({
+                about: userProfileAbout,
+                place: userProfilePlace,
+                birthdate: dayjs(userProfileBirthdate).format("YYYY/MM/DD")
+            })
+        })
+        .then(response => { console.log(response); return response.text(); })
+        .then( data => { console.log(data); });
+        if(isProfilePictureChanged)
+            sendProfilePicture();
+    }
 
-    function sendProfilePicture(event){
+    function sendProfilePicture(){
         const formData = new FormData();
         formData.append('profilepicture', newUserProfilePictureFile);
         console.log(formData);
@@ -20,11 +39,14 @@ function MyProfile(){
             method: "POST",
             credentials: "include",
             body: formData
-        }).then(response => { console.log(response); return response.text() }).then(data => {
-            console.log(data);
-          });
+        })
+        .then(response => { console.log(response); return response.text() })
+        .then(data => { console.log(data); });
     }
+
     function handleProfilePictureChange(event){
+        setIsProfilePictureChanged(true);
+        setIsSaveButtonDeactivated(false);
         setNewUserProfilePictureFile(event.target.files[0]);
     }
 
@@ -57,7 +79,12 @@ function MyProfile(){
                 headers: { "Content-Type": "application/json"}
             })
             .then(response => { return response.json(); })
-            .then(data => { console.log(data); setUserProfileInfos(data)})
+            .then(data => { 
+                console.log(data);
+                setUserProfileAbout(data.about);
+                setUserProfilePlace(data.place);
+                setUserProfileBirthdate(data.userProfileBirthdate);
+            })
         }, []
     )
     return(
@@ -68,6 +95,7 @@ function MyProfile(){
                 { userProfilePicture ? 
                     <img src={userProfilePicture} alt="Avatar" width="100" height="100"></img> : 
                     <Typography>Loading PP</Typography> }
+                    <br/>
                 <Button component="label" variant="contained">
                     Upload file
                     <VisuallyHiddenInput type="file" onChange={handleProfilePictureChange}/>
@@ -75,18 +103,30 @@ function MyProfile(){
             </Box>
             { /* User Infos */ }
             <Box>
-                { userProfileInfos ? 
-                    <Box>
-                        <Typography>About</Typography>
-                        <Typography>{userProfileInfos.description}</Typography>
-                        <DateField label="Birthday" value={dayjs(userProfileInfos.birthdate.date)}></DateField>
-                    </Box>
-                     : 
-                    <Typography>Loading</Typography> }
+                <Box>
+                    <TextField
+                        id="user-about"
+                        label="About"
+                        placeholder="A little about you"
+                        multiline
+                        rows={4}
+                        value={userProfileAbout}
+                        onChange={(event) => { setUserProfileAbout(event.target.value); setIsSaveButtonDeactivated(false); }}/>
+                    <TextField
+                        id="user-place"
+                        label="place"
+                        placeholder="Where are you ?"
+                        value={userProfilePlace}
+                        onChange={(event)=>{ setUserProfilePlace(event.target.value); setIsSaveButtonDeactivated(false); }}/>
+                    <DateField
+                        label="Birthday"
+                        value={dayjs(userProfileBirthdate)}
+                        />
+                </Box>
             </Box>
             <br/>
-
-                <Button onClick={sendProfilePicture}>Save changes</Button>
+            <Button disabled={isSaveButtonDeactivated} onClick={saveChanges}>Save changes</Button>
+            <Button disabled={isSaveButtonDeactivated} onClick={() => window.location.reload(false)}>Cancel changes</Button>
         </Stack>
     )
 }
