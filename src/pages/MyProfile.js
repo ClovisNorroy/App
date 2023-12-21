@@ -6,8 +6,7 @@ import dayjs from "dayjs";
 
 
 function MyProfile(){
-
-    const [newUserProfilePictureFile, setNewUserProfilePictureFile] = useState();
+    const [userProfilePictureFile, setUserProfilePictureFile] = useState();
     const [userProfilePicture, setUserProfilePicture] = useState();
     const [userProfilePlace, setUserProfilePlace] = useState("");
     const [userProfileAbout, setUserProfileAbout] = useState("");
@@ -33,7 +32,7 @@ function MyProfile(){
 
     function sendProfilePicture(){
         const formData = new FormData();
-        formData.append('profilepicture', newUserProfilePictureFile);
+        formData.append('profilepicture', userProfilePictureFile);
         console.log(formData);
         fetch(process.env.REACT_APP_BEBUDDY_API+"/api/profilepicture", {
             method: "POST",
@@ -47,7 +46,7 @@ function MyProfile(){
     function handleProfilePictureChange(event){
         setIsProfilePictureChanged(true);
         setIsSaveButtonDeactivated(false);
-        setNewUserProfilePictureFile(event.target.files[0]);
+        setUserProfilePictureFile(event.target.files[0]);
     }
 
     const VisuallyHiddenInput = styled('input')({
@@ -62,6 +61,16 @@ function MyProfile(){
         width: 1,
       });
 
+    useEffect( () => {
+        if (!userProfilePictureFile) {
+            setUserProfilePicture(undefined)
+            return
+        }
+        const profilePictureURL = URL.createObjectURL(userProfilePictureFile);
+        setUserProfilePicture(profilePictureURL);
+        return () => URL.revokeObjectURL(profilePictureURL);
+    }, [userProfilePictureFile])
+
     useEffect(
         () =>{
             // Fetch User Profile Picture
@@ -70,7 +79,7 @@ function MyProfile(){
                 credentials: "include"
             })
             .then(response => response.blob())
-            .then(blob => { setUserProfilePicture(URL.createObjectURL(blob)) });
+            .then(blob => { setUserProfilePictureFile(blob) });
 
             // Fetch User Profile Infos
             fetch(process.env.REACT_APP_BEBUDDY_API+"/api/userprofile",{
