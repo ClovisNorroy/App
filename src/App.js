@@ -3,7 +3,6 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Home from 'pages/Home';
 import RootLayout from 'pages/Root';
 import PageNotFound from 'pages/PageNotFound';
-import Activity from 'pages/Activity';
 import Login from 'pages/Login';
 import Signup from 'pages/Signup';
 import NewActivity from 'pages/NewActivity';

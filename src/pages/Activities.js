@@ -1,10 +1,13 @@
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+
 
 const { default: ActivityCard } = require("components/Activities/ActivityCard");
 const { useEffect, useState } = require("react");
 
 function Activities(){
     const [activities, setActivities] = useState();
+    const navigate = useNavigate();
     //fetch data once on render
     useEffect(() =>{
         fetch(process.env.REACT_APP_BEBUDDY_API+"/api/activities", {
@@ -28,6 +31,8 @@ function Activities(){
                 nbrparticipants={activity.nbrParticipants}/>)
                 : <Typography> Loading </Typography>
         }
+        <br/>
+        <Button variant="contained" onClick={() => { navigate('/newactivity') }}>Create New Activity</Button>
         </>
     )
 }

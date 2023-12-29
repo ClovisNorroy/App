@@ -9,14 +9,15 @@ function NewActivity() {
   const activityTitleRef = useRef('');
   const activityNameRef = useRef('');
   const activityPlaceRef = useRef('');
-  const [date, setDate] = useState();
+  const [date, setDate] = useState(dayjs());
   const maximumNumberOfParticipantsRef = useRef(0);
   const activityDescriptionRef = useRef('');
   const [privacy, setPrivacy] = useState('0');
 
 function sendNewActivity(){
-  fetch("http://127.0.0.1:8000/api/activity/new", {
+  fetch(process.env.REACT_APP_BEBUDDY_API+"/api/activity/new", {
     method: 'POST',
+    credentials: 'include',
     body: JSON.stringify({
       title: activityTitleRef.current.value,
       description: activityDescriptionRef.current.value,
@@ -27,7 +28,7 @@ function sendNewActivity(){
       privacy: privacy
      }),
     headers: { "Content-Type": "application/json" }
-  }).then(response => { console.log(response); return response.json(); }).then(data => {
+  }).then(response => { console.log(response); return response.text(); }).then(data => {
     console.log(data)
   })
 }
